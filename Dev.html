@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 20px auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .error-message {
+      color: #f00;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="registrationForm">
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" required>
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" required>
+
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required oninput="validateEmail()">
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="country">Country:</label>
+    <select id="country" name="country" required>
+      <option value="">Select...</option>
+      <option value="INDIA">INDIA</option>
+      <option value="usa">USA</option>
+      <option value="canada">Canada</option>
+      <option value="uk">UK</option>
+      <!-- Add more options as needed -->
+    </select>
+
+    <label>
+      <input type="checkbox" id="terms" name="terms" required>
+      I accept the terms and conditions
+    </label>
+
+    <button type="button" onclick="validateForm()">Register</button>
+  </form>
+
+  <script>
+    function validateForm() {
+      var firstName = document.getElementById('firstName').value;
+      var lastName = document.getElementById('lastName').value;
+      var username = document.getElementById('username').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var country = document.getElementById('country').value;
+      var terms = document.getElementById('terms').checked;
+      var errorMessage = '';
+
+      if (!firstName || !lastName || !username || !email || !password || !country || !terms) {
+        errorMessage = 'All fields are required.';
+      } else if (password.length < 6) {
+        errorMessage = 'Password should be at least 6 characters long.';
+      }
+
+      if (errorMessage) {
+        document.getElementById('error-message').innerHTML = errorMessage;
+      } else {
+        document.getElementById('error-message').innerHTML = '';
+        alert('Registration successful!\nName: ' + firstName + ' ' + lastName + '\nUsername: ' + username + '\nEmail: ' + email + '\nCountry: ' + country);
+      }
+    }
+
+    function validateEmail() {
+      var email = document.getElementById('email').value;
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      var emailErrorMessage = '';
+
+      if (!emailRegex.test(email)) {
+        emailErrorMessage = 'Invalid email format.';
+      }
+
+      if (emailErrorMessage) {
+        document.getElementById('email-error').innerHTML = emailErrorMessage;
+      } else {
+        document.getElementById('email-error').innerHTML = '';
+      }
+    }
+  </script>
+
+  <p class="error-message" id="error-message"></p>
+  <p class="error-message" id="email-error"></p>
+
+</body>
+</html>
